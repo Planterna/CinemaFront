@@ -21,6 +21,8 @@
 <img width="1266" height="924" alt="image" src="https://github.com/user-attachments/assets/d946d316-1a63-4462-a20b-4fde3a522eaf" />
 - cargar salas de cine
 <img width="1269" height="729" alt="image" src="https://github.com/user-attachments/assets/2f458f8b-e7f7-4eed-ba71-c711ac4004a5" />
+- editar salas de cine
+<img width="1259" height="861" alt="image" src="https://github.com/user-attachments/assets/c76703bf-7169-427b-9532-67b63e5db711" />
 - asignar peliculas con sala
 <img width="1271" height="731" alt="image" src="https://github.com/user-attachments/assets/004ef659-a9a7-4ed6-9a21-bee8fbff217b" />
 - login y registro (aun sin validaciones en registro)
