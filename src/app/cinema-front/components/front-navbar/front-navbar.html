@@ -1,0 +1,22 @@
+<div class="navbar bg-base-100">
+  <div class="flex-1">
+    <a routerLink="/cinema" class="btn btn-ghost text-xl">Cinema Managment</a>
+  </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li><a routerLink="/cinema/dashboard">Dashboard</a></li>
+      <li><a routerLink="/cinema/movie">Peliculas</a></li>
+      <li><a routerLink="/cinema/room">Salas</a></li>
+      <li><a routerLink="/cinema/assignment">Asignaciones</a></li>
+      <li>
+        <details>
+          <summary>Admin</summary>
+          <ul class="bg-base-100 rounded-t-none p-2">
+            <li><a routerLink="/auth/login">Iniciar Sesión</a></li>
+            <li><a class="text-warning">Salir</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+</div>
