@@ -1,23 +1,35 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RoomService } from '../../../../room/services/room.service';
+import { RoomsResponse } from '../../../../room/interfaces/room.interface';
 
 @Component({
   selector: 'app-room-edit-page',
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './room-edit-page.html',
 })
-export class RoomEditPage {
+export class RoomEditPage implements OnInit {
   fb = inject(FormBuilder);
   activatedRoute = inject(ActivatedRoute);
+  route = inject(Router);
+  roomService = inject(RoomService);
+  room = signal<RoomsResponse | null>(null);
 
   hasError = signal(false);
-  isPosting = signal(false);
 
   roomForm = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
     estado: ['Activa', [Validators.required, Validators.minLength(5)]],
   });
+
+  id = this.activatedRoute.snapshot.params['id'];
+
+  ngOnInit(): void {
+    this.roomService
+      .getRoomForId(this.id)
+      .subscribe((data) => this.room.set(data));
+  }
 
   onSubmit() {
     if (this.roomForm.invalid) {
@@ -28,16 +40,23 @@ export class RoomEditPage {
       return;
     }
 
-    const { nombre = '', estado = '' } = this.roomForm.value;
-    // this.authService.login(email!, password!).subscribe((isAuthenticated) => {
-    //   if (isAuthenticated) {
-    //     this.router.navigateByUrl('/');
-    //     return;
-    //   }
-    //   this.hasError.set(true);
-    //   setTimeout(() => {
-    //     this.hasError.set(false);
-    //   }, 2000);
-    // });
+    const { nombre = '', estado = 'Activa' } = this.roomForm.value;
+
+    this.roomService
+      .updateRoom({
+        id_sala: +this.id,
+        nombre: nombre!,
+        estado: estado!,
+      })
+      .subscribe(() => {
+        setTimeout(() => {
+          this.route.navigateByUrl(`cinema/room/${this.id}`);
+        }, 3000);
+      });
+
+    this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 2000);
   }
 }

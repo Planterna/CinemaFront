@@ -1,15 +1,22 @@
 <div
-  class="hero min-h-screen"
+  class="hero min-h-[calc(100vh-64px)]"
   style="
-    background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp);
+    background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
   "
 >
-  <div class="hero-overlay bg-opacity-60"></div>
+  <div class="hero-overlay bg-black bg-opacity-70"></div>
+
   <div class="hero-content text-neutral-content text-center">
-    <div class="max-w-md">
-      <h1 class="mb-5 text-5xl font-bold">Bienvenidos a CinemaManagment</h1>
-      <p class="mb-5">Da click para segir explorando</p>
-      <button routerLink="/cinema/dashboard" class="btn btn-primary">
+    <div class="max-w-md px-4"> <h1 class="mb-5 text-3xl md:text-5xl font-bold leading-tight">
+        Bienvenidos a Cinema Management
+      </h1>
+
+      <p class="mb-5 text-sm md:text-base opacity-90">
+        Gestiona películas, salas y asignaciones de forma fácil y rápida.
+        Da click abajo para seguir explorando.
+      </p>
+
+      <button routerLink="/cinema/dashboard" class="btn btn-primary btn-wide hover:scale-105 transition-transform">
         Explorar
       </button>
     </div>

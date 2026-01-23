@@ -1,142 +1,184 @@
 <div
-  class="bg-slate-800 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
+  class="flex h-screen bg-slate-800 text-slate-300 antialiased overflow-hidden selection:bg-blue-600 selection:text-white"
 >
-  <div class="flex flex-col relative w-screen">
-    <div
-      id="menu"
-      class="bg-gray-900 min-h-screen z-10 text-slate-300 w-64 fixed left-0 h-screen overflow-y-scroll"
-    >
-      <div id="logo" class="my-4 px-6">
+  <div
+    *ngIf="isSidebarOpen"
+    (click)="isSidebarOpen = false"
+    class="fixed inset-0 z-20 bg-black bg-opacity-50 transition-opacity lg:hidden"
+  ></div>
+
+  <div
+    class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 border-r border-slate-700/30"
+    [class.-translate-x-full]="!isSidebarOpen"
+    [class.translate-x-0]="isSidebarOpen"
+  >
+    <div class="flex items-center justify-between h-16 px-6 bg-gray-900">
+      <div class="flex flex-col">
         <h1
           routerLink="/"
-          class="text-lg md:text-2xl font-bold text-white font-montserrat cursor-pointer"
+          class="text-xl md:text-2xl font-bold text-white font-montserrat cursor-pointer"
         >
-          Teslo<span class="text-blue-500">| Shop</span>
+          Cinema<span class="text-blue-500">|Mgt</span>
         </h1>
-        <p class="text-slate-500 text-sm">Manage your actions and activities</p>
+        <p class="text-slate-500 text-xs">Manage activities</p>
       </div>
-      <div id="profile" class="px-6 py-10">
-        <p class="text-slate-500">Bienvenido,</p>
-        <a href="#" class="inline-flex space-x-2 items-center">
-          <span>
-            <img
-              class="rounded-full w-8 h-8"
-              src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
-              alt=""
-            />
-          </span>
-          <span class="text-sm md:text-base font-bold">
-            Admin
-          </span>
-        </a>
-      </div>
-      <div id="nav" class="w-full px-6">
-        <a
-          routerLink="/cinema/dashboard"
-          class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
+      <button
+        (click)="isSidebarOpen = false"
+        class="lg:hidden text-slate-400 hover:text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 text-white"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-              />
-            </svg>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-lg font-bold leading-5 text-white"
-              >Dashboard</span
-            >
-            <span class="text-sm text-white/50 hidden md:block"
-              >Data Overview</span
-            >
-          </div>
-        </a>
-        <a
-          routerLink="/cinema/movie"
-          routerLinkActive="bg-blue-800"
-          class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
-        >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-              />
-            </svg>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-lg text-slate-300 font-bold leading-5"
-              >Peliculas</span
-            >
-            <span class="text-sm text-slate-500 hidden md:block"
-              >Listado de Peliculas</span
-            >
-          </div>
-        </a>
-        <a
-          routerLink="/cinema/room"
-          routerLinkActive="bg-blue-800"
-          class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
-        >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-              />
-            </svg>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-lg text-slate-300 font-bold leading-5"
-              >Salas</span
-            >
-            <span class="text-sm text-slate-500 hidden md:block"
-              >Listado de Salas</span
-            >
-          </div>
-        </a>
-        <!-- Menu Item end -->
-        <div class="divider my-2"></div>
-      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
     </div>
-  </div>
-  <div class="flex-1 ml-64 pt-5 px-5">
-    <div class="font-bold text-2xl">
-      <h1>Bienvenidos al Dashboard</h1>
 
-      <div class="stats shadow">
-        <div class="stat">
-          <div class="stat-figure text-primary">
+    <div class="px-6 py-6 border-b border-slate-800">
+      <p class="text-slate-500 text-sm mb-2">Bienvenido,</p>
+      <a href="#" class="inline-flex space-x-2 items-center group">
+        <img
+          class="rounded-full w-10 h-10 ring-2 ring-blue-500/20 group-hover:ring-blue-500 transition-all"
+          src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=128&q=80"
+          alt="Avatar"
+        />
+        <span
+          class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors"
+          >Admin User</span
+        >
+      </a>
+    </div>
+
+    <nav class="mt-6 px-4 space-y-2">
+      <a
+        routerLink="/cinema/dashboard"
+        routerLinkActive="bg-blue-600 text-white shadow-lg shadow-blue-500/20"
+        (click)="isSidebarOpen = false"
+        class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-slate-800 text-slate-400 hover:text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+          />
+        </svg>
+        <span class="font-medium">Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/cinema/movie"
+        routerLinkActive="bg-blue-600 text-white shadow-lg shadow-blue-500/20"
+        (click)="isSidebarOpen = false"
+        class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-slate-800 text-slate-400 hover:text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+          />
+        </svg>
+        <span class="font-medium">Películas</span>
+      </a>
+
+      <a
+        routerLink="/cinema/room"
+        routerLinkActive="bg-blue-600 text-white shadow-lg shadow-blue-500/20"
+        (click)="isSidebarOpen = false"
+        class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-slate-800 text-slate-400 hover:text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          />
+        </svg>
+        <span class="font-medium">Salas</span>
+      </a>
+    </nav>
+  </div>
+
+  <div
+    class="flex-1 flex flex-col h-screen overflow-hidden lg:ml-64 transition-all duration-300"
+  >
+    <div
+      class="lg:hidden flex items-center bg-gray-900 border-b border-slate-700 h-16 px-4"
+    >
+      <button
+        (click)="toggleSidebar()"
+        class="text-white focus:outline-none mr-4"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+      <span class="font-bold text-lg text-white">Cinema Management</span>
+    </div>
+
+    <main
+      class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-800 p-4 md:p-8"
+    >
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between mb-8"
+      >
+        <h1 class="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-0">
+          Dashboard
+        </h1>
+      </div>
+
+      <div
+        class="stats stats-vertical lg:stats-horizontal shadow-xl bg-gray-900 w-full text-slate-300 border border-slate-700/50"
+      >
+        <div class="stat place-items-center lg:place-items-start">
+          <div class="stat-figure text-primary hidden lg:block">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              class="inline-block h-8 w-8 stroke-current"
+              class="inline-block w-8 h-8 stroke-current"
             >
               <path
                 stroke-linecap="round"
@@ -147,22 +189,26 @@
             </svg>
           </div>
           <div
-            routerLink="/movie"
-            class="stat-title hover:cursor cursor-pointer animate-pulse transition-0.3"
+            routerLink="/cinema/movie"
+            class="stat-title hover:text-white cursor-pointer transition-colors"
           >
-            Total Peliculas
+            Películas Total
           </div>
-          <div class="stat-value text-primary">{{totalMovies()}}</div>
-          <div class="divider"></div>
+          <div class="stat-value text-primary text-3xl md:text-4xl">
+            {{totalMovies()}}
+          </div>
+          <div class="stat-desc">Catalogo actual</div>
         </div>
 
-        <div class="stat">
-          <div class="stat-figure text-secondary">
+        <div
+          class="stat place-items-center lg:place-items-start border-t lg:border-t-0 border-slate-700"
+        >
+          <div class="stat-figure text-secondary hidden lg:block">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              class="inline-block h-8 w-8 stroke-current"
+              class="inline-block w-8 h-8 stroke-current"
             >
               <path
                 stroke-linecap="round"
@@ -173,28 +219,82 @@
             </svg>
           </div>
           <div
-            routerLink="/room"
-            class="stat-title hover:cursor cursor-pointer animate-pulse transition-0.3"
+            routerLink="/cinema/room"
+            class="stat-title hover:text-white cursor-pointer transition-colors"
           >
             Total Salas
           </div>
-          <div class="stat-value text-secondary">{{totalRooms()}}</div>
-          <div class="divider"></div>
+          <div class="stat-value text-secondary text-3xl md:text-4xl">
+            {{totalRooms()}}
+          </div>
+          <div class="stat-desc">Capacidad Instalada</div>
         </div>
 
-        <div class="stat">
-          <div class="stat-figure text-secondary"></div>
-          <div
-            class="stat-title hover:cursor cursor-pointer animate-pulse transition-0.3"
-          >
-            Salas Disponibles
+        <div
+          class="stat place-items-center lg:place-items-start border-t lg:border-t-0 border-slate-700"
+        >
+          <div class="stat-figure text-accent hidden lg:block">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
           </div>
-          <div class="stat-title">
-            Total <span class="text-accent">{{totalRoomsActived()}}</span>
+          <div class="stat-title">Salas Activas</div>
+          <div class="stat-value text-accent text-3xl md:text-4xl">
+            {{totalRoomsActived()}}
           </div>
-          <div class="divider"></div>
+          <div class="stat-desc text-accent">Disponibles hoy</div>
         </div>
       </div>
-    </div>
+
+      <div class="divider"></div>
+      <h3 class="text-2xl font-bold">Recuento de Asignaciones de Sala</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nombre Sala</th>
+              <th>Nombre Pelicula</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            @for (item of assignments(); track $index) {
+            <tr>
+              <th>{{ $index + 1 }}</th>
+              <!--  -->
+              @for (dato of rooms(); track $index){
+              <!--  -->
+              @if(item.id_sala === dato.id_sala){
+              <td>{{dato.nombre}}</td>
+              } }
+              <!--  -->
+              @for (dato of movies(); track $index) {
+              <!--  -->
+              @if(item.id_pelicula === dato.id_pelicula){
+              <td>{{dato.nombre}}</td>
+              } }
+              <!--  -->
+              <td>{{item.fecha_publicacion | date}}</td>
+              <td>{{item.fecha_fin | date}}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </div>

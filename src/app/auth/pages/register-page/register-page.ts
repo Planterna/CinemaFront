@@ -28,21 +28,5 @@ export class RegisterPage {
       }, 2000);
       return;
     }
-    const { email = '', password = '', fullName = '' } = this.registerForm.value;
-
-    // this.authService.register(email!, password!, fullName!).subscribe((isRegister) => {
-    //   if (isRegister) {
-    //     this.hasSuccess.set(true);
-    //     setTimeout(() => {
-    //       this.hasSuccess.set(false);
-    //       this.router.navigateByUrl('/');
-    //     }, 3000);
-    //     return;
-    //   }
-    //   this.hasError.set(true);
-    //   setTimeout(() => {
-    //     this.hasError.set(false);
-    //   }, 2000);
-    // });
   }
 }
