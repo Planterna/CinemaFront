@@ -1,0 +1,67 @@
+<div class="flex justify-center items-center">
+  <form
+    class="card w-full max-w-md bg-base-100 shadow-xl p-6 space-y-4"
+    [formGroup]="assignmentForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h2 class="text-xl font-bold text-center">Asignar Película a Sala</h2>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Película</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        formControlName="id_pelicula"
+      >
+        <option disabled selected>Seleccione una película</option>
+        @for (movie of movies(); track movie.id_pelicula) {
+        <option [value]="movie.id_pelicula">{{movie.nombre}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Sala</span>
+      </label>
+      <select class="select select-bordered w-full" formControlName="id_sala">
+        <option disabled selected>Seleccione una sala</option>
+        @for (room of rooms(); track room.id_sala) {
+        <option [value]="room.id_sala">{{room.nombre}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Fecha Publicacion</span>
+      </label>
+      <input
+        type="date"
+        class="input select-bordered"
+        formControlName="fecha_publicacion"
+      />
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Fecha Fin</span>
+      </label>
+      <input
+        type="date"
+        class="input select-bordered"
+        formControlName="fecha_fin"
+      />
+    </div>
+
+    <div class="form-control mt-6">
+      <button  class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30"
+            type="submit"
+            [disabled]="assignmentForm.invalid">Guardar</button>
+      <button  class="btn btn-primary mt-3 flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30"
+            type="button"
+            routerLink="/cinema/movie">Salir</button>
+    </div>
+  </form>
+</div>

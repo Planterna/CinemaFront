@@ -1,0 +1,83 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-900 p-4">
+  <div
+    class="w-full max-w-md bg-slate-800 shadow-2xl rounded-2xl overflow-hidden border border-slate-700"
+  >
+    <div class="p-8">
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-white">Editar Película</h2>
+        <p class="text-slate-400 text-sm mt-1">
+          Actualiza la información del catálogo
+        </p>
+      </div>
+
+      <form
+        class="flex flex-col gap-5"
+        [formGroup]="movieForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text text-slate-300 font-medium"
+              >Título de la Película</span
+            >
+          </label>
+          <input
+            type="text"
+            placeholder="Ej: Inception"
+            class="input input-bordered w-full bg-slate-900 border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            formControlName="nombre"
+          />
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text text-slate-300 font-medium"
+              >Duración (minutos)</span
+            >
+          </label>
+          <input
+            type="number"
+            min="1"
+            placeholder="Ej: 120"
+            class="input input-bordered w-full bg-slate-900 border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-primary"
+            formControlName="duracion"
+          />
+        </div>
+
+        <div
+          class="form-control bg-slate-900/50 p-3 rounded-lg border border-slate-700/50"
+        >
+          <label class="cursor-pointer label justify-between">
+            <span class="label-text text-slate-300 font-medium"
+              >Disponible en Cartelera</span
+            >
+            <input
+              type="checkbox"
+              class="checkbox checkbox-primary checkbox-md"
+            />
+          </label>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row gap-3 mt-4 pt-4 border-t border-slate-700"
+        >
+          <button
+            type="button"
+            routerLink="/cinema/movie"
+            class="btn btn-ghost text-slate-400 hover:text-white hover:bg-slate-700 flex-1 order-2 sm:order-1"
+          >
+            Cancelar
+          </button>
+
+          <button
+            class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/20"
+            type="submit"
+            [disabled]="movieForm.invalid"
+          >
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

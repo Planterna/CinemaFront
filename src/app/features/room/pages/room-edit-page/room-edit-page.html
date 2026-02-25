@@ -1,0 +1,73 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-900 p-4">
+  <div
+    class="w-full max-w-md bg-slate-800 shadow-2xl rounded-2xl overflow-hidden border border-slate-700"
+  >
+    <div class="p-8">
+      <h2 class="text-3xl font-bold text-center text-white mb-2">
+        Editar Sala
+      </h2>
+      <p class="text-slate-400 text-center mb-6">
+        Modifica los detalles de la sala seleccionada
+      </p>
+
+      <form
+        class="flex flex-col gap-4"
+        [formGroup]="roomForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text text-slate-300 font-medium"
+              >Nombre de la Sala</span
+            >
+          </label>
+          <input
+            type="text"
+            placeholder="Ej: Sala 3D - A"
+            class="input input-bordered w-full bg-slate-900 border-slate-600 text-white placeholder-slate-500 focus:outline-none focus:border-primary"
+            formControlName="nombre"
+            [value]="room()?.nombre"
+          />
+          @if (roomForm.get('nombre')?.invalid &&
+          roomForm.get('nombre')?.touched) {
+          <span class="text-error text-xs mt-1">El nombre es requerido</span>
+          }
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text text-slate-300 font-medium">Estado</span>
+          </label>
+          <select
+            class="select select-bordered w-full bg-slate-900 border-slate-600 text-white focus:outline-none focus:border-primary"
+            formControlName="estado"
+            [value]="room()?.estado"
+          >
+            <option [ngValue]="null" disabled>Seleccione un estado</option>
+            <option value="Activa">Activa</option>
+            <option value="Inactiva">Inactiva</option>
+            <option value="Mantenimiento">En Mantenimiento</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 mt-6">
+          <button
+            type="button"
+            routerLink="/cinema/room"
+            class="btn btn-ghost text-slate-300 hover:bg-slate-700 flex-1 order-2 sm:order-1"
+          >
+            Cancelar
+          </button>
+
+          <button
+            class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30"
+            type="submit"
+            [disabled]="roomForm.invalid"
+          >
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

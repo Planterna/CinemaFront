@@ -1,0 +1,34 @@
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-3"
+>
+  @for (movie of movies(); track movie.id_pelicula) {
+
+  <div class="card card-compact bg-base-100 shadow-xl animate-fadeIn">
+    <figure>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+      />
+    </figure>
+    <div class="card-body">
+      <h2
+        class="card-title font-montserrat text-accent text-lg hover:underline cursor-pointer"
+      >
+        {{ movie.nombre }}
+      </h2>
+      <p>
+        Esta pelicula dura:
+        <span class="text-accent">{{ movie.duracion }} minutos</span>
+      </p>
+      <div class="card-actions justify-end">
+        <a
+          class="text-accent"
+          [routerLink]="['/cinema/movie/edit/', movie.id_pelicula]"
+          class="link link-accent"
+        >
+          Ver producto
+        </a>
+      </div>
+    </div>
+  </div>
+  }
+</div>
