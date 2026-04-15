@@ -1,5 +1,5 @@
 export interface MoviesResponse {
-  id_pelicula?: number;
+  id_pelicula?: string;
   nombre: string;
   duracion: number;
   activo?: boolean;

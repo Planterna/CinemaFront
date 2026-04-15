@@ -1,5 +1,5 @@
 export interface AssignmentResponse {
-  id?: number;
+  id?: string;
   id_pelicula: number;
   id_sala: number;
   fecha_publicacion: Date;

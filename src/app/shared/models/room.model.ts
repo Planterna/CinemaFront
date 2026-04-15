@@ -1,5 +1,5 @@
 export interface RoomsResponse {
-  id_sala?: number;
+  id_sala?: string;
   nombre: string;
   estado: string;
 }
