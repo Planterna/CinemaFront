@@ -44,7 +44,7 @@ export class RoomEditPage implements OnInit {
 
     this.roomService
       .updateRoom({
-        id_sala: +this.id,
+        id_sala: this.id,
         nombre: nombre!,
         estado: estado!,
       })

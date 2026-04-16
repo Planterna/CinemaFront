@@ -45,7 +45,7 @@ export class MovieEditPage implements OnInit {
 
     this.movieService
       .updateMovie({
-        id_pelicula: +this.id,
+        id_pelicula: this.id,
         nombre: nombre!,
         duracion: duracion!,
         activo: activo!,

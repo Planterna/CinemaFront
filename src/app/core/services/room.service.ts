@@ -23,7 +23,7 @@ export class RoomService {
       .pipe(map((resp) => resp.filter((r) => r.estado === 'Activa')));
   }
 
-  getRoomForId(id: number): Observable<RoomsResponse> {
+  getRoomForId(id: string): Observable<RoomsResponse> {
     return this.http.get<RoomsResponse>(`${baseUrl}/salas/${id}`);
   }
 
@@ -34,7 +34,7 @@ export class RoomService {
     );
   }
 
-  deleteRoom(id: number): Observable<RoomsResponse> {
+  deleteRoom(id: string): Observable<RoomsResponse> {
     return this.getRoomForId(id).pipe(
       map((movie) => ({ ...movie, status: false })),
       switchMap((body) =>

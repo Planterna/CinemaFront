@@ -47,16 +47,16 @@ export class AssignmentPage implements OnInit {
     }
 
     const {
-      id_sala = 0,
-      id_pelicula = 0,
+      id_sala = "",
+      id_pelicula = "",
       fecha_publicacion = new Date(),
       fecha_fin = new Date(),
     } = this.assignmentForm.value;
 
     this.assignment
       .createAssignment({
-        id_pelicula: +id_pelicula!,
-        id_sala: +id_sala!,
+        id_pelicula: id_pelicula!,
+        id_sala: id_sala!,
         fecha_publicacion: new Date(fecha_publicacion!),
         fecha_fin: new Date(fecha_fin!),
       })

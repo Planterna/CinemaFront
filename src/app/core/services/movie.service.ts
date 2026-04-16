@@ -18,7 +18,7 @@ export class MovieService {
       .pipe(tap((resp) => console.log(resp)));
   }
 
-  getMovieForId(id: number): Observable<MoviesResponse> {
+  getMovieForId(id: string): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${baseUrl}/peliculas/${id}`);
   }
 
@@ -29,7 +29,7 @@ export class MovieService {
     );
   }
 
-  deleteMovie(id: number): Observable<MoviesResponse> {
+  deleteMovie(id: string): Observable<MoviesResponse> {
     return this.getMovieForId(id).pipe(
       map((movie) => ({ ...movie, status: false })),
       switchMap((body) =>

@@ -15,13 +15,13 @@ export class AssignmentMovieService {
       .get<AssignmentResponse[]>(`${baseUrl}/asignaciones`)
       .pipe(tap((resp) => console.log(resp)));
   }
-  getAssignmentForRoomId(id: number): Observable<AssignmentResponse> {
+  getAssignmentForRoomId(id: string): Observable<AssignmentResponse> {
     return this.http.get<AssignmentResponse>(
       `${baseUrl}/asignaciones/sala/${id}`,
     );
   }
 
-  deleteAssignment(id: number): Observable<AssignmentResponse> {
+  deleteAssignment(id: string): Observable<AssignmentResponse> {
     return this.http.delete<AssignmentResponse>(
       `${baseUrl}/asignaciones/${id}`,
     );
