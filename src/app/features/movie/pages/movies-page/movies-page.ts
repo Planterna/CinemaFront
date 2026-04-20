@@ -24,12 +24,16 @@ export class MoviesPage implements OnInit {
     this.movieService.getMovie().subscribe((data) => this.movies.set(data));
   }
 
-  searchMovie(name: string){
+  searchMovie(event: any) {
+    const name = event.target.value.toLowerCase().trim();
 
-    this.movieService.getMovie().subscribe((data)=> this.movies.set(data))
-  }
+    if (name === '') this.movies();
+    else this.movieService.getMovieForName(name).subscribe((data) =>
+      data!.length > 0 ? this.movies.set(data!) : this.movies.set([])
+     );
 
-  searchMovies = (name: string) => this.movieService.getMovie().subscribe();
+
+    }
 
 
 }

@@ -21,6 +21,9 @@ export class MovieService {
   getMovieForId(id: string): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${baseUrl}/peliculas/${id}`);
   }
+  getMovieForName(name: string): Observable<MoviesResponse[] | null> {
+    return this.http.get<MoviesResponse[]>(`${baseUrl}/peliculas/titulo/${name}`);
+  }
 
   updateMovie(movie: MoviesResponse): Observable<MoviesResponse> {
     return this.http.put<MoviesResponse>(
