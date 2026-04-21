@@ -14,22 +14,22 @@ export class RoomService {
 
   getRoom(): Observable<RoomsResponse[]> {
     return this.http
-      .get<RoomsResponse[]>(`${baseUrl}/salas`)
+      .get<RoomsResponse[]>(`${baseUrl}/room`)
       .pipe(tap((resp) => console.log(resp)));
   }
   getRoomActived(): Observable<RoomsResponse[]> {
     return this.http
-      .get<RoomsResponse[]>(`${baseUrl}/salas`)
+      .get<RoomsResponse[]>(`${baseUrl}/room`)
       .pipe(map((resp) => resp.filter((r) => r.estado === 'Activa')));
   }
 
   getRoomForId(id: string): Observable<RoomsResponse> {
-    return this.http.get<RoomsResponse>(`${baseUrl}/salas/${id}`);
+    return this.http.get<RoomsResponse>(`${baseUrl}/room/${id}`);
   }
 
   updateRoom(movie: RoomsResponse): Observable<RoomsResponse> {
     return this.http.put<RoomsResponse>(
-      `${baseUrl}/salas/${movie.id_sala}`,
+      `${baseUrl}/room/${movie.id_sala}`,
       movie,
     );
   }
@@ -38,11 +38,11 @@ export class RoomService {
     return this.getRoomForId(id).pipe(
       map((movie) => ({ ...movie, status: false })),
       switchMap((body) =>
-        this.http.put<RoomsResponse>(`${baseUrl}/salas/${id}`, body),
+        this.http.put<RoomsResponse>(`${baseUrl}/room/${id}`, body),
       ),
     );
   }
   createRoom(room: RoomsResponse): Observable<RoomsResponse> {
-    return this.http.post<RoomsResponse>(`${baseUrl}/salas`, room);
+    return this.http.post<RoomsResponse>(`${baseUrl}/room`, room);
   }
 }

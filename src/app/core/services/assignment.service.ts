@@ -10,20 +10,20 @@ const baseUrl = environment.baseUrl;
 export class AssignmentMovieService {
   private http = inject(HttpClient);
 
-  getAsignaciones(): Observable<AssignmentResponse[]> {
+  getAssignment(): Observable<AssignmentResponse[]> {
     return this.http
-      .get<AssignmentResponse[]>(`${baseUrl}/asignaciones`)
+      .get<AssignmentResponse[]>(`${baseUrl}/assignment`)
       .pipe(tap((resp) => console.log(resp)));
   }
   getAssignmentForRoomId(id: string): Observable<AssignmentResponse> {
     return this.http.get<AssignmentResponse>(
-      `${baseUrl}/asignaciones/sala/${id}`,
+      `${baseUrl}/assignment/sala/${id}`,
     );
   }
 
   deleteAssignment(id: string): Observable<AssignmentResponse> {
     return this.http.delete<AssignmentResponse>(
-      `${baseUrl}/asignaciones/${id}`,
+      `${baseUrl}/assignment/${id}`,
     );
   }
 
@@ -31,7 +31,7 @@ export class AssignmentMovieService {
     assignment: AssignmentResponse,
   ): Observable<AssignmentResponse> {
     return this.http.post<AssignmentResponse>(
-      `${baseUrl}/asignaciones`,
+      `${baseUrl}/assignment`,
       assignment,
     );
   }

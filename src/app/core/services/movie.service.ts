@@ -14,20 +14,20 @@ export class MovieService {
 
   getMovie(): Observable<MoviesResponse[]> {
     return this.http
-      .get<MoviesResponse[]>(`${baseUrl}/peliculas`)
+      .get<MoviesResponse[]>(`${baseUrl}/movie`)
       .pipe(tap((resp) => console.log(resp)));
   }
 
   getMovieForId(id: string): Observable<MoviesResponse> {
-    return this.http.get<MoviesResponse>(`${baseUrl}/peliculas/${id}`);
+    return this.http.get<MoviesResponse>(`${baseUrl}/movie/${id}`);
   }
   getMovieForName(name: string): Observable<MoviesResponse[] | null> {
-    return this.http.get<MoviesResponse[]>(`${baseUrl}/peliculas/titulo/${name}`);
+    return this.http.get<MoviesResponse[]>(`${baseUrl}/movie/title/${name}`);
   }
 
   updateMovie(movie: MoviesResponse): Observable<MoviesResponse> {
     return this.http.put<MoviesResponse>(
-      `${baseUrl}/peliculas/${movie.id_pelicula}`,
+      `${baseUrl}/movie/${movie.id_pelicula}`,
       movie,
     );
   }
@@ -36,11 +36,11 @@ export class MovieService {
     return this.getMovieForId(id).pipe(
       map((movie) => ({ ...movie, status: false })),
       switchMap((body) =>
-        this.http.put<MoviesResponse>(`${baseUrl}/peliculas/${id}`, body),
+        this.http.put<MoviesResponse>(`${baseUrl}/movie/${id}`, body),
       ),
     );
   }
   createMovie(movie: MoviesResponse): Observable<MoviesResponse> {
-    return this.http.post<MoviesResponse>(`${baseUrl}/peliculas`, movie);
+    return this.http.post<MoviesResponse>(`${baseUrl}/movie`, movie);
   }
 }

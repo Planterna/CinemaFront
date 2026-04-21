@@ -44,7 +44,7 @@ export class DashboardPage implements OnInit {
       .subscribe((data) => this.totalRoomsActived.set(data.length));
 
     this.assignmentService
-      .getAsignaciones()
+      .getAssignment()
       .subscribe((data) => this.assignments.set(data));
   }
 }
