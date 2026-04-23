@@ -7,7 +7,7 @@ import { RoomsResponse } from '../../../../shared/models/room.model';
 @Component({
   selector: 'app-room-edit-page',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './room-edit-page.html',
+  templateUrl: './room-edit-page.component.html',
 })
 export class RoomEditPage implements OnInit {
   fb = inject(FormBuilder);

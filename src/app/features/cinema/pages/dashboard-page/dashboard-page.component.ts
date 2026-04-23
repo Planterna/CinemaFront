@@ -11,7 +11,7 @@ import { AssignmentResponse } from '../../../../shared/models/assignment.model';
 @Component({
   selector: 'app-dashboard-page',
   imports: [RouterLink, NgIf, DatePipe],
-  templateUrl: './dashboard-page.html',
+  templateUrl: './dashboard-page.component.html',
 })
 export class DashboardPage implements OnInit {
   totalMovies = signal<number>(1);

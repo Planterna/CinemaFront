@@ -3,7 +3,7 @@
     <h2 class="text-2xl md:text-4xl font-bold text-slate-200">
       Peliculas Disponibles
       <span class="ml-1 badge badge-accent badge-lg font-extrabold text-white">
-        {{ movies().length }}
+        {{ moviesResource.value()?.length }}
       </span>
     </h2>
     <p class="text-slate-500 mt-2 text-sm md:text-base">
@@ -22,9 +22,9 @@
     </div>
   </div>
 
-  @if (movies().length > 0 ) {
+  @if (moviesResource.value()?.length! > 0) {
 
-  <app-movie-card [movies]="movies()"></app-movie-card>
+  <app-movie-card [movies]="moviesResource.value()!"></app-movie-card>
 
   } @else {
 

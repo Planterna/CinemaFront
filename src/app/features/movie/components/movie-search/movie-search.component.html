@@ -1,6 +1,6 @@
 <div class="join font-montserat">
-  <input (input)="action.emit($event)" class="input input-bordered join-item" placeholder="Buscar por Pelicula" />
-  <button class="btn join-item rounded-r-full btn-primary">
+  <input #pelicula class="input input-bordered join-item" placeholder="Buscar por Pelicula" />
+  <button class="btn join-item rounded-r-full btn-primary" (click)="action.emit(pelicula.value)">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
       viewBox="0 0 16 16">
       <path

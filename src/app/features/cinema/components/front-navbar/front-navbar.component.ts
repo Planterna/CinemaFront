@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'front-navbar',
   imports: [RouterLink, NgIf],
-  templateUrl: './front-navbar.html',
+  templateUrl: './front-navbar.component.html',
 })
 export class FrontNavbar {
   isMenuOpen = false;

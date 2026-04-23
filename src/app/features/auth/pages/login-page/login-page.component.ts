@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-login-page',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login-page.html',
+  templateUrl: './login-page.component.html',
 })
 export class LoginPage {
   fb = inject(FormBuilder);

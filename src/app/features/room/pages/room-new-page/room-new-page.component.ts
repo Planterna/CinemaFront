@@ -6,7 +6,7 @@ import { RoomService } from '../../../../core/services/room.service';
 @Component({
   selector: 'app-room-new-page',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './room-new-page.html',
+  templateUrl: './room-new-page.component.html',
 })
 export class RoomNewPage {
   fb = inject(FormBuilder);

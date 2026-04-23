@@ -5,7 +5,7 @@ import { MoviesResponse } from '../../../../shared/models/movie.model';
 @Component({
   selector: 'app-movie-card',
   imports: [RouterLink],
-  templateUrl: './movie-card.html',
+  templateUrl: './movie-card.component.html',
 })
 export class MovieCard {
   movies = input.required<MoviesResponse[]>();

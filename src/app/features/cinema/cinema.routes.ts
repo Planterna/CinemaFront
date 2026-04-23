@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './pages/home-page/home-page';
-import { CinemaFrontLayout } from './layout/cinema-front-layout/cinema-front-layout';
-import { NotFoundPage } from './pages/not-found-page/not-found-page';
-import { DashboardPage } from './pages/dashboard-page/dashboard-page';
+import { HomePage } from './pages/home-page/home-page.component';
+import { CinemaFrontLayout } from './layout/cinema-front-layout/cinema-front-layout.component';
+import { NotFoundPage } from './pages/not-found-page/not-found-page.component';
+import { DashboardPage } from './pages/dashboard-page/dashboard-page.component';
 
 export const CinemaRoutes: Routes = [
   {

@@ -4,38 +4,37 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MovieService } from '../../../../core/services/movie.service';
 import { RoomService } from '../../../../core/services/room.service';
 import { AssignmentMovieService } from '../../../../core/services/assignment.service';
-import { MoviesResponse } from '../../../../shared/models/movie.model';
-import { RoomsResponse } from '../../../../shared/models/room.model';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-assignment-page',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './assignment-page.html',
+  templateUrl: './assignment-page.component.html',
 })
-export class AssignmentPage implements OnInit {
+export class AssignmentPage {
   movieService = inject(MovieService);
   roomService = inject(RoomService);
   assignment = inject(AssignmentMovieService);
   fb = inject(FormBuilder);
+  activatedRoute = inject(ActivatedRoute);
+  route = inject(Router);
 
+  movieResource = rxResource({
+    loader: () => this.movieService.getMovie()
+  })
+
+  roomResource = rxResource({
+    loader: () => this.roomService.getRoomActived()
+  })
+  
+  hasError = signal(false);
+  
   assignmentForm = this.fb.group({
     id_sala: [, [Validators.required]],
     id_pelicula: [, [Validators.required]],
     fecha_publicacion: [, [Validators.required]],
     fecha_fin: [, [Validators.required]],
   });
-
-  activatedRoute = inject(ActivatedRoute);
-  route = inject(Router);
-
-  movies = signal<MoviesResponse[]>([]);
-  rooms = signal<RoomsResponse[]>([]);
-  hasError = signal(false);
-
-  ngOnInit(): void {
-    this.movieService.getMovie().subscribe((data) => this.movies.set(data));
-    this.roomService.getRoomActived().subscribe((data) => this.rooms.set(data));
-  }
 
   onSubmit() {
     if (this.assignmentForm.invalid) {

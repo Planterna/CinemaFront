@@ -7,7 +7,7 @@ import { MoviesResponse } from '../../../../shared/models/movie.model';
 @Component({
   selector: 'app-movie-edit',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './movie-edit-page.html',
+  templateUrl: './movie-edit-page.component.html',
 })
 export class MovieEditPage implements OnInit {
   fb = inject(FormBuilder);
