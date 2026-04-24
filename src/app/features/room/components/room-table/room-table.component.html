@@ -1,0 +1,59 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nº</th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Activo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (rooms().length > 0) {
+        @for (room of rooms(); track $index) {
+          <tr>
+            <td>
+              {{ $index + 1 }}
+            </td>
+            <td>
+              <div>
+                <h2 class="font-bold">
+                  {{ room.nombre }}
+                </h2>
+              </div>
+            </td>
+            <td>
+              <span class="badge badge-primary badge-sm">{{
+                room.estado
+              }}</span>
+            </td>
+            <td>
+              <h3 class="text-xl">
+                {{ room.activo === true ? "Activo" : "Inactivo" }}
+              </h3>
+            </td>
+            <td>
+              <button
+                (click)="edit.emit(room)"
+                class="btn btn-primary btn-xs mr-2"
+              >
+                Editar
+              </button>
+              <button class="btn btn-error btn-xs">Eliminar</button>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Nº</th>
+        <th>Nombre</th>
+        <th>Duración</th>
+        <th>Activo</th>
+        <th>Acciones</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

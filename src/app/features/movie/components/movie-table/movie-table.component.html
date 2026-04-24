@@ -1,0 +1,56 @@
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Nombre</th>
+                <th>Duración</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(movies().length > 0){
+                @for (movie of movies(); track $index) {
+                    <tr>
+                        <td>
+                            {{$index + 1}}
+                        </td>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar">
+                                    <div class="mask mask-squircle h-12 w-12">
+                                        <img src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                                            alt="Avatar Tailwind CSS Component" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">{{movie.nombre}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-primary badge-sm">{{movie.duracion}} minutos</span>
+                        </td>
+                        <td>
+                            <h3 class="text-xl">{{movie.activo === true ? "Activo": "Inactivo"}} </h3>
+                        </td>
+                        <td>
+                            <button (click)="edit.emit(movie)" class="btn btn-primary btn-xs mr-2">Editar</button>
+                            <button class="btn btn-error btn-xs">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Nº</th>
+                <th>Nombre</th>
+                <th>Duración</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

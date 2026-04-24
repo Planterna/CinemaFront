@@ -1,0 +1,6 @@
+<div>
+  <h2 class="text-2xl font-montserrat font-bold">Listado de Peliculas</h2>
+
+  <app-movie-table [movies]="movieResource.value()!" (edit)="editMovie($event)">
+  </app-movie-table>
+</div>
