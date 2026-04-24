@@ -2,17 +2,12 @@ import { Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page.component';
 import { CinemaFrontLayout } from './layout/cinema-front-layout/cinema-front-layout.component';
 import { NotFoundPage } from './pages/not-found-page/not-found-page.component';
-import { DashboardPage } from './pages/dashboard-page/dashboard-page.component';
 
 export const CinemaRoutes: Routes = [
   {
-    path: '',
+    path: 'cinema',
     component: CinemaFrontLayout,
     children: [
-      {
-        path: 'dashboard',
-        component: DashboardPage,
-      },
       {
         path: '',
         component: HomePage,
@@ -40,5 +35,9 @@ export const CinemaRoutes: Routes = [
       },
     ],
   },
+  {
+    path: '**',
+    redirectTo: 'cinema'
+  }
 ];
 export default CinemaRoutes;
