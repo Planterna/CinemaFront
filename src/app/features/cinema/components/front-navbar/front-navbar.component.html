@@ -1,4 +1,6 @@
-<div class="navbar bg-base-100 z-50 relative">
+<div
+  class="navbar bg-base-100 text-base-content z-50 relative border-b border-base-300"
+>
   <div class="navbar-start">
     <div class="dropdown" [class.dropdown-open]="isMenuOpen">
       <div
@@ -26,11 +28,6 @@
         class="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <a routerLink="/cinema/dashboard" (click)="isMenuOpen = false"
-            >Dashboard</a
-          >
-        </li>
-        <li>
           <a routerLink="/cinema/movie" (click)="isMenuOpen = false"
             >Películas</a
           >
@@ -38,22 +35,49 @@
         <li>
           <a routerLink="/cinema/room" (click)="isMenuOpen = false">Salas</a>
         </li>
+
         <li>
-          <a routerLink="/cinema/assignment" (click)="isMenuOpen = false"
-            >Asignaciones</a
-          >
+          <a>
+            <label class="flex cursor-pointer gap-2 items-center">
+              <span class="font-medium text-xs">Dark</span>
+
+              <input
+                type="checkbox"
+                value="cupcake"
+                class="toggle theme-controller toggle-sm toggle-primary"
+              />
+
+              <span class="font-medium text-xs">Cupcake</span>
+            </label>
+          </a>
         </li>
         <li>
-          <a>Admin</a>
+          <a>{{ currentUser() ? currentUser().nombre : "Cuenta" }}</a>
+
           <ul class="p-2">
-            <li>
-              <a routerLink="/auth/login" (click)="isMenuOpen = false"
-                >Iniciar Sesión</a
-              >
-            </li>
-            <li>
-              <a class="text-warning" (click)="isMenuOpen = false">Salir</a>
-            </li>
+            @if (!currentUser()) {
+              <li>
+                <a routerLink="/auth/login" (click)="isMenuOpen = false"
+                  >Iniciar Sesión</a
+                >
+              </li>
+            }
+
+            @if (currentUser()) {
+              @if (authService.isAdmin()) {
+                <li>
+                  <a routerLink="/admin/dashboard" (click)="isMenuOpen = false"
+                    >Ir al Dashboard</a
+                  >
+                </li>
+              }
+
+              <li>
+                <a class="text-error" (click)="logout(); isMenuOpen = false"
+                  >Salir</a
+                >
+              </li>
+            }
           </ul>
         </li>
       </ul>
@@ -70,16 +94,41 @@
 
   <div class="navbar-end hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li><a routerLink="/cinema/dashboard">Dashboard</a></li>
       <li><a routerLink="/cinema/movie">Películas</a></li>
       <li><a routerLink="/cinema/room">Salas</a></li>
-      <li><a routerLink="/cinema/assignment">Asignaciones</a></li>
+      <li>
+        <a>
+          <label class="flex cursor-pointer gap-2 items-center">
+            <span class="font-medium text-xs">Dark</span>
+
+            <input
+              type="checkbox"
+              value="cupcake"
+              class="toggle theme-controller toggle-sm toggle-primary"
+            />
+
+            <span class="font-medium text-xs">Cupcake</span>
+          </label>
+        </a>
+      </li>
+
       <li>
         <details>
-          <summary>Admin</summary>
+          <summary>
+            {{ currentUser() ? currentUser().nombre : "Cuenta" }}
+          </summary>
+
           <ul class="p-2 bg-base-100 rounded-t-none z-50">
-            <li><a routerLink="/auth/login">Iniciar Sesión</a></li>
-            <li><a class="text-warning" routerLink="/cinema">Salir</a></li>
+            @if (!currentUser()) {
+              <li><a routerLink="/auth/login">Iniciar Sesión</a></li>
+            }
+
+            @if (currentUser()) {
+              @if (authService.isAdmin()) {
+                <li><a routerLink="/admin/dashboard">Ir al Dashboard</a></li>
+              }
+              <li><a class="text-error" (click)="logout()">Salir</a></li>
+            }
           </ul>
         </details>
       </li>

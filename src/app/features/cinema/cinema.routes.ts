@@ -1,43 +1,24 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './pages/home-page/home-page.component';
 import { CinemaFrontLayout } from './layout/cinema-front-layout/cinema-front-layout.component';
+import { HomePage } from './pages/home-page/home-page.component';
 import { NotFoundPage } from './pages/not-found-page/not-found-page.component';
 
-export const CinemaRoutes: Routes = [
+export default [
   {
-    path: 'cinema',
+    path: '',
     component: CinemaFrontLayout,
     children: [
-      {
-        path: '',
-        component: HomePage,
-      },
+      { path: 'home', component: HomePage },
       {
         path: 'movie',
-        loadChildren: () =>
-          import('../movie/movie.routes').then((m) => m.MovieRoutes),
+        loadChildren: () => import('../movie/movie-client.routes'),
       },
       {
         path: 'room',
-        loadChildren: () =>
-          import('../room/room.routes').then((r) => r.RoomRoutes),
+        loadChildren: () => import('../room/room-client.routes'),
       },
-      {
-        path: 'assignment',
-        loadChildren: () =>
-          import('../assignment/assignment.routes').then(
-            (r) => r.AssignmentRoutes,
-          ),
-      },
-      {
-        path: '**',
-        component: NotFoundPage,
-      },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', component: NotFoundPage },
     ],
   },
-  {
-    path: '**',
-    redirectTo: 'cinema'
-  }
-];
-export default CinemaRoutes;
+] as Routes;

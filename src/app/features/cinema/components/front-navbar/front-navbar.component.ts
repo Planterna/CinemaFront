@@ -1,6 +1,7 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'front-navbar',
@@ -8,5 +9,11 @@ import { RouterLink } from '@angular/router';
   templateUrl: './front-navbar.component.html',
 })
 export class FrontNavbar {
+  authService = inject(AuthService);
   isMenuOpen = false;
+  currentUser = this.authService.currentUser;
+
+  logout() {
+    this.authService.logout();
+  }
 }

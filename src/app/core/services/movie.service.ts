@@ -33,12 +33,7 @@ export class MovieService {
   }
 
   deleteMovie(id: string): Observable<MoviesResponse> {
-    return this.getMovieForId(id).pipe(
-      map((movie) => ({ ...movie, status: false })),
-      switchMap((body) =>
-        this.http.put<MoviesResponse>(`${baseUrl}/movie/${id}`, body),
-      ),
-    );
+    return this.http.delete<MoviesResponse>(`${baseUrl}/movie/${id}`);
   }
   createMovie(movie: MoviesResponse): Observable<MoviesResponse> {
     return this.http.post<MoviesResponse>(`${baseUrl}/movie`, movie);

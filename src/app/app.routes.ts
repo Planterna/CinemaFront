@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -7,10 +8,17 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./features/admin-dashboard/admin-dashboard.routes'),
+    canMatch: [adminGuard],
+    loadChildren: () =>
+      import('./features/admin-dashboard/admin-dashboard.routes'),
+  },
+  {
+    path: 'cinema',
+    loadChildren: () => import('./features/cinema/cinema.routes'),
   },
   {
     path: '',
-    loadChildren: () => import('./features/cinema/cinema.routes'),
+    redirectTo: 'cinema',
+    pathMatch: 'full',
   },
 ];

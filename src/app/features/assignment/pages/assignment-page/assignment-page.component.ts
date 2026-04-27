@@ -1,74 +1,73 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MovieService } from '../../../../core/services/movie.service';
-import { RoomService } from '../../../../core/services/room.service';
+import { Component, inject, signal } from '@angular/core';
+import { AssignmentTableComponent } from '../../components/assignment-table/assignment-table.component';
 import { AssignmentMovieService } from '../../../../core/services/assignment.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Router, RouterLink } from '@angular/router';
+import { AssignmentResponseDTO } from '../../../../shared/models/assignment.model';
+import { ModalGlobalComponent } from '../../../../shared/components/modal-global/modal-global.component';
+import { ModalType } from '../../../movie/components/movie-alert/movie-alert.component';
 
 @Component({
   selector: 'app-assignment-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [AssignmentTableComponent, RouterLink, ModalGlobalComponent],
   templateUrl: './assignment-page.component.html',
 })
 export class AssignmentPage {
-  movieService = inject(MovieService);
-  roomService = inject(RoomService);
-  assignment = inject(AssignmentMovieService);
-  fb = inject(FormBuilder);
-  activatedRoute = inject(ActivatedRoute);
-  route = inject(Router);
+  assignmentService = inject(AssignmentMovieService);
+  router = inject(Router);
 
-  movieResource = rxResource({
-    loader: () => this.movieService.getMovie()
-  })
+  isModalOpen = signal<boolean>(false);
+  assignmentSeleccionada = signal<AssignmentResponseDTO | null>(null);
+  tipoModal = signal<ModalType | null>(null);
+  tituloModal = signal<string>('');
+  descripcionModal = signal<string>('');
 
-  roomResource = rxResource({
-    loader: () => this.roomService.getRoomActived()
-  })
-  
-  hasError = signal(false);
-  
-  assignmentForm = this.fb.group({
-    id_sala: [, [Validators.required]],
-    id_pelicula: [, [Validators.required]],
-    fecha_publicacion: [, [Validators.required]],
-    fecha_fin: [, [Validators.required]],
+  assignmentResource = rxResource({
+    loader: () => this.assignmentService.getAssignmentFull(),
   });
 
-  onSubmit() {
-    if (this.assignmentForm.invalid) {
-      this.hasError.set(true);
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
-      return;
-    }
+  editAssignment = (assignment: AssignmentResponseDTO) => {
+    this.router.navigate([
+      '/admin/assignment/edit/',
+      assignment.id_pelicula_sala,
+    ]);
+  };
 
-    const {
-      id_sala = '',
-      id_pelicula = '',
-      fecha_publicacion = '',
-      fecha_fin = '',
-    } = this.assignmentForm.value;
-
-    this.assignment
-      .createAssignment({
-        id_pelicula: id_pelicula!,
-        id_sala: id_sala!,
-        fecha_publicacion: fecha_publicacion!,
-        fecha_fin: fecha_fin!,
-      })
-      .subscribe(() => {
-        setTimeout(() => {
-          console.log('Se creo la asignación... redireccionando');
-          this.route.navigateByUrl(`cinema/dashboard`);
-        }, 3000);
+  deletedAssignment = () => {
+    const assignment = this.assignmentSeleccionada();
+    this.assignmentService
+      .deleteAssignment(assignment?.id_pelicula_sala!)
+      .subscribe({
+        next: () => {
+          this.tipoModal.set('SUCCESS');
+          this.tituloModal.set('Eliminación Éxitosa');
+          this.descripcionModal.set('La pelicula se eliminó con éxito');
+          this.isModalOpen.set(true);
+          this.assignmentResource.reload();
+        },
+        error: () => {
+          this.tipoModal.set('ERROR');
+          this.tituloModal.set('No se pudo eliminar');
+          this.descripcionModal.set('La pelicula no se puedo eliminar');
+          this.isModalOpen.set(true);
+        },
       });
+  };
 
-    this.hasError.set(true);
-    setTimeout(() => {
-      this.hasError.set(false);
-    }, 2000);
+  abrirModalEliminar(assignment: AssignmentResponseDTO) {
+    this.assignmentSeleccionada.set(assignment);
+    this.tipoModal.set('WARNING');
+    this.tituloModal.set('¿Estas Seguro de Eliminar?');
+    this.descripcionModal.set(
+      `Esta pelicula sera eliminada del sistema? - ${assignment.nombre_pelicula} - ${assignment.nombre_sala}`,
+    );
+    this.isModalOpen.set(true);
+  }
+
+  cerrarModal() {
+    this.isModalOpen.set(false);
+    this.tituloModal.set('');
+    this.descripcionModal.set('');
+    this.assignmentSeleccionada.set(null);
   }
 }

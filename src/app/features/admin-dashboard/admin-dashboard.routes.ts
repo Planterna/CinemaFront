@@ -1,51 +1,28 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { AdminDashboardPage } from './pages/admin-dashboard-page/admin-dashboard-page.component';
-import { MovieAdminPage } from '../movie/pages/movie-admin-page/movie-admin-page.component';
-import { RoomAdminPage } from '../room/pages/room-admin-page/room-admin-page.component';
-import { MovieEditPage } from '../movie/pages/movie-edit-page/movie-edit-page.component';
-import { RoomEditPage } from '../room/pages/room-edit-page/room-edit-page.component';
-import { AssignmentPage } from '../assignment/pages/assignment-page/assignment-page.component';
 
-export const adminDashboardRoutes: Routes = [
+export default [
   {
     path: '',
     component: AdminLayoutComponent,
-    //canMatch: [IsAdminGuard],
+    // canMatch: [IsAdminGuard], // Descomenta esto cuando tengas la seguridad
     children: [
-      {
-        path: 'dashboard',
-        component: AdminDashboardPage,
-      },
+      { path: 'dashboard', component: AdminDashboardPage },
+
       {
         path: 'movie',
-        component: MovieAdminPage,
-      },
-      {
-        path: 'movie-edit/:id',
-        component: MovieEditPage,
+        loadChildren: () => import('../movie/movie-admin.routes'),
       },
       {
         path: 'room',
-        component: RoomAdminPage,
-      },
-      {
-        path: 'room-edit/:id',
-        component: RoomEditPage,
+        loadChildren: () => import('../room/room-admin.routes'),
       },
       {
         path: 'assignment',
-        component: AssignmentPage
+        loadChildren: () => import('../assignment/assignment-admin.routes'),
       },
-      /*  {
-        path: 'products/:id',
-        component: ,
-      },  */
-      {
-        path: '**',
-        redirectTo: 'dashboard',
-      },
+      { path: '**', redirectTo: 'dashboard' },
     ],
   },
-];
-export default adminDashboardRoutes;
+] as Routes;

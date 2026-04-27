@@ -4,7 +4,7 @@ import { RoomsResponse } from '../../../../shared/models/room.model';
 
 @Component({
   selector: 'app-room-card',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './room-card.component.html',
 })
 export class RoomCard {

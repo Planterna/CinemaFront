@@ -1,51 +1,47 @@
-<div class="flex justify-center items-center">
-  <form class="card w-full max-w-md bg-base-100 shadow-xl p-6 space-y-4" [formGroup]="assignmentForm"
-    (ngSubmit)="onSubmit()">
-    <h2 class="text-xl font-bold text-center">Asignar Película a Sala</h2>
+@if (isModalOpen()) {
+  <app-modal-global
+    [tipo]="tipoModal()!"
+    [titulo]="tituloModal()!"
+    [modulo]="'MOVIE'"
+    [descripcion]="descripcionModal()!"
+    (onClose)="cerrarModal()"
+    (onAccept)="deletedAssignment()"
+  >
+  </app-modal-global>
+}
 
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">Película</span>
-      </label>
-      <select class="select select-bordered w-full" formControlName="id_pelicula">
-        <option disabled selected>Seleccione una película</option>
-        @for (movie of movieResource.value(); track movie.id_pelicula) {
-        <option [value]="movie.id_pelicula">{{movie.nombre}}</option>
-        }
-      </select>
+<div class="container mx-auto px-4 py-2">
+  <div class="mb-3 text-center md:text-left">
+    <h2 class="text-2xl md:text-4xl font-bold text-base-content">
+      Asignaciones Disponibles
+      <span class="ml-1 badge badge-accent badge-lg font-extrabold">
+        {{ assignmentResource.value()?.length }}
+      </span>
+    </h2>
+    <p class="text-base-content/60 mt-2 text-sm md:text-base">
+      Administra las asignaciones de peliculas a salas disponibles.
+    </p>
+  </div>
+  <div class="flex items-center justify-between w-full">
+    <div>
+      <h2>implements</h2>
     </div>
 
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">Sala</span>
-      </label>
-      <select class="select select-bordered w-full" formControlName="id_sala">
-        <option disabled selected>Seleccione una sala</option>
-        @for (room of roomResource.value(); track room.id_sala) {
-        <option [value]="room.id_sala">{{room.nombre}}</option>
-        }
-      </select>
+    <div>
+      <button
+        class="btn btn-primary border my-2"
+        [routerLink]="['/admin/assignment/new']"
+      >
+        Add
+      </button>
     </div>
-
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">Fecha Publicacion</span>
-      </label>
-      <input type="date" class="input select-bordered" formControlName="fecha_publicacion" />
-    </div>
-
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text">Fecha Fin</span>
-      </label>
-      <input type="date" class="input select-bordered" formControlName="fecha_fin" />
-    </div>
-
-    <div class="form-control mt-6">
-      <button class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30" type="submit"
-        [disabled]="assignmentForm.invalid">Guardar</button>
-      <button class="btn btn-primary mt-3 flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30" type="button"
-        routerLink="/cinema/movie">Salir</button>
-    </div>
-  </form>
+  </div>
+  <div>
+    <app-assignment-table
+      [assignments]="assignmentResource.value()!"
+      (edit)="editAssignment($event)"
+      (delete)="abrirModalEliminar($event)"
+    >
+    </app-assignment-table>
+  </div>
 </div>

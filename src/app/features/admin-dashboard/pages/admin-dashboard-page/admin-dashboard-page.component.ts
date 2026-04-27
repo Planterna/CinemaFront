@@ -3,11 +3,11 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { AssignmentMovieService } from '../../../../core/services/assignment.service';
 import { MovieService } from '../../../../core/services/movie.service';
 import { RoomService } from '../../../../core/services/room.service';
-import { DatePipe } from '@angular/common';
+import { AssignmentTableComponent } from '../../../assignment/components/assignment-table/assignment-table.component';
 
 @Component({
   selector: 'app-admin-dashboard-page',
-  imports: [DatePipe],
+  imports: [AssignmentTableComponent],
   templateUrl: './admin-dashboard-page.component.html',
 })
 export class AdminDashboardPage {
@@ -28,8 +28,6 @@ export class AdminDashboardPage {
   });
 
   assignmentResource = rxResource({
-    loader: () => this.assignmentService.getAssignment(),
+    loader: () => this.assignmentService.getAssignmentFullActived(),
   });
-
-  
 }

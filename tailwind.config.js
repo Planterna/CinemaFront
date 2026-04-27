@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,js}'],
+  content: ['./src/**/*.{html,ts,js}'],
   theme: {
     fontFamily: {
       'montserrat': [ 'Montserrat', 'sans-serif' ]
@@ -8,4 +8,7 @@ module.exports = {
     extend: {},
   },
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: ["dark", "cupcake"],
+  }
 };

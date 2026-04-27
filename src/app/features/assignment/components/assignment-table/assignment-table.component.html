@@ -1,0 +1,115 @@
+<div
+  class="overflow-x-auto w-full rounded-xl border border-base-300 bg-base-100 shadow-sm"
+>
+  <table class="table w-full whitespace-nowrap">
+    <thead
+      class="bg-base-200/50 text-base-content/70 text-xs uppercase tracking-wider"
+    >
+      <tr>
+        <th class="font-semibold">#</th>
+        <th class="font-semibold">Nombre Sala</th>
+        <th class="font-semibold">Nombre Película</th>
+        <th class="font-semibold">Fecha Inicio</th>
+        <th class="font-semibold">Fecha Fin</th>
+        @if (!dashboard()) {
+          <th class="font-semibold">Estado</th>
+          <th class="font-semibold">Acciones</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (item of assignments(); track $index) {
+        <tr class="hover:bg-base-200/50 transition-colors duration-200">
+          <td class="text-base-content/60 font-medium">
+            {{ $index + 1 }}
+          </td>
+          <td class="font-bold text-base-content">
+            {{ item.nombre_sala }}
+          </td>
+          <td class="text-base-content">
+            {{ item.nombre_pelicula }}
+          </td>
+          <td>
+            <div class="flex items-center gap-2 text-base-content/80 text-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 opacity-70"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              {{ item.fecha_publicacion | date: "dd MMM, yyyy" }}
+            </div>
+          </td>
+          <td>
+            <div class="flex items-center gap-2 text-base-content/80 text-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 opacity-70"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              {{ item.fecha_fin | date: "dd MMM, yyyy" }}
+            </div>
+          </td>
+
+          @if (!dashboard()) {
+            <td>
+              <span
+                class="badge badge-sm font-medium border-none"
+                [class]="
+                  item.activo
+                    ? 'bg-success/20 text-success'
+                    : 'bg-error/20 text-error'
+                "
+              >
+                {{ item.activo ? "Activo" : "Inactivo" }}
+              </span>
+            </td>
+            <td>
+              <div class="flex items-center gap-2">
+                <button
+                  (click)="edit.emit(item)"
+                  class="btn btn-ghost btn-xs text-primary hover:bg-primary/20"
+                >
+                  Editar
+                </button>
+                <button (click)="delete.emit(item)"
+                  class="btn btn-ghost btn-xs text-error hover:bg-error/20"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          }
+        </tr>
+      } @empty {
+        @if (!dashboard()) {
+          <td colspan="7">
+            <no-data [titulo]="'asignaciones de salas a peliculas'"></no-data>
+          </td>
+        } @else {
+          <td colspan="5">
+            <no-data [titulo]="'asignaciones de salas a peliculas'"></no-data>
+          </td>
+        }
+      }
+    </tbody>
+  </table>
+</div>

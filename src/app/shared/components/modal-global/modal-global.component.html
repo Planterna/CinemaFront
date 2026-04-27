@@ -1,0 +1,46 @@
+<div class="modal modal-open">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg flex items-center gap-2">
+      @if (tipo() === "ERROR") {
+        <span>⚠️</span>
+      }
+      @if (tipo() === "SUCCESS") {
+        <span>✅</span>
+      }
+      @if (tipo() === "WARNING") {
+        <span>🚧</span>
+      }
+
+      {{ titulo() }}
+    </h3>
+
+    <div class="py-4">
+      @if (modulo() === "MOVIE") {
+        <app-movie-alert
+          [descripcion]="descripcion()"
+          [tipoAlerta]="tipo()"
+        ></app-movie-alert>
+      }
+      @if (modulo() === "ROOM") {
+        <app-room-alert
+          [descripcion]="descripcion()"
+          [tipoAlerta]="tipo()"
+        ></app-room-alert>
+      }
+      @if (modulo() === "ASSIGNMENT") {
+        <app-assignment-alert
+          [descripcion]="descripcion()"
+          [tipoAlerta]="tipo()"
+        ></app-assignment-alert>
+      }
+    </div>
+
+    <div class="modal-action">
+      <button class="btn btn-ghost" (click)="onClose.emit()">Cerrar</button>
+
+      @if (showAcceptButton) {
+        <button class="btn btn-error" (click)="onAccept.emit()">Aceptar</button>
+      }
+    </div>
+  </div>
+</div>

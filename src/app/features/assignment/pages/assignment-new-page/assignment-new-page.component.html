@@ -1,0 +1,112 @@
+@if (isModalOpen()) {
+  <app-modal-global
+    [tipo]="tipoModal()!"
+    [titulo]="tituloModal()!"
+    [modulo]="'ASSIGNMENT'"
+    [descripcion]="descripcionModal()!"
+    (onClose)="cerrarModal()"
+  >
+  </app-modal-global>
+}
+<div class="flex justify-center items-center">
+  <form
+    class="card w-full max-w-md bg-base-100 text-base-content shadow-xl border border-base-300 p-6 space-y-4"
+    [formGroup]="assignmentForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h2 class="text-xl font-bold text-center text-base-content">
+      Asignar Película a Sala
+    </h2>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text text-base-content/80">Película</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        formControlName="id_pelicula"
+      >
+        <option disabled>Seleccione una película</option>
+
+        @for (movie of movieResource.value(); track movie.id_pelicula) {
+          <option
+            [selected]="
+            "
+            [value]="movie.id_pelicula"
+          >
+            {{ movie.nombre }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text text-base-content/80">Sala</span>
+      </label>
+      <select class="select select-bordered w-full" formControlName="id_sala">
+        <option disabled selected>Seleccione una sala</option>
+        @for (room of roomResource.value(); track room.id_sala) {
+          <option
+            [value]="room.id_sala"
+          >
+            {{ room.nombre }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text text-base-content/80">Fecha Publicacion</span>
+      </label>
+      <input
+        type="date"
+        class="input select-bordered"
+        formControlName="fecha_publicacion"
+      />
+    </div>
+
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text text-base-content/80">Fecha Fin</span>
+      </label>
+      <input
+        type="date"
+        class="input select-bordered"
+        formControlName="fecha_fin"
+      />
+    </div>
+     <div
+          class="form-control bg-base-200/70 p-3 rounded-lg border border-base-300"
+        >
+          <label class="cursor-pointer label justify-between">
+            <span class="label-text text-base-content/80 font-medium"
+              >Disponible en Cartelera</span
+            >
+            <input
+              type="checkbox"
+              class="checkbox checkbox-primary checkbox-md"
+              formControlName="activo"
+            />
+          </label>
+        </div>
+
+    <div class="form-control mt-6">
+      <button
+        class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30"
+        type="submit"
+        [disabled]="assignmentForm.invalid"
+      >
+        Guardar
+      </button>
+      <button
+        class="btn btn-ghost mt-3 flex-1 order-1 sm:order-2"
+        type="button"
+        routerLink="/admin/assignment"
+      >
+        Salir
+      </button>
+    </div>
+  </form>
+</div>

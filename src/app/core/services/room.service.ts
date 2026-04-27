@@ -35,12 +35,7 @@ export class RoomService {
   }
 
   deleteRoom(id: string): Observable<RoomsResponse> {
-    return this.getRoomForId(id).pipe(
-      map((movie) => ({ ...movie, status: false })),
-      switchMap((body) =>
-        this.http.put<RoomsResponse>(`${baseUrl}/room/${id}`, body),
-      ),
-    );
+    return this.http.delete<RoomsResponse>(`${baseUrl}/room/${id}`);
   }
   createRoom(room: RoomsResponse): Observable<RoomsResponse> {
     return this.http.post<RoomsResponse>(`${baseUrl}/room`, room);

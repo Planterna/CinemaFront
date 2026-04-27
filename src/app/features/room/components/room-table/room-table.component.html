@@ -1,59 +1,84 @@
-<div class="overflow-x-auto">
-  <table class="table">
-    <thead>
+<div
+  class="overflow-x-auto w-full rounded-xl border border-base-300 bg-base-100 shadow-sm"
+>
+  <table class="table w-full whitespace-nowrap">
+    <thead
+      class="bg-base-200/50 text-base-content/70 text-xs uppercase tracking-wider"
+    >
       <tr>
-        <th>Nº</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Activo</th>
-        <th>Acciones</th>
+        <th class="font-semibold">#</th>
+        <th class="font-semibold">Sala</th>
+        <th class="font-semibold">Funcionamiento</th>
+        <th class="font-semibold">Estado</th>
+        <th class="font-semibold">Acciones</th>
       </tr>
     </thead>
+
     <tbody>
-      @if (rooms().length > 0) {
-        @for (room of rooms(); track $index) {
-          <tr>
-            <td>
-              {{ $index + 1 }}
-            </td>
-            <td>
-              <div>
-                <h2 class="font-bold">
-                  {{ room.nombre }}
-                </h2>
+      @for (room of rooms(); track $index) {
+        <tr class="hover:bg-base-200/50 transition-colors duration-200">
+          <td class="text-base-content/60 font-medium">
+            {{ $index + 1 }}
+          </td>
+          <td>
+            <div class="flex items-center gap-4">
+              <div class="avatar">
+                <div
+                  class="w-12 h-12 rounded-lg bg-base-200 ring-1 ring-base-300 shadow-sm"
+                >
+                  <img
+                    [src]="room.imagen_url"
+                    alt="Imagen Sala"
+                    class="object-cover"
+                  />
+                </div>
               </div>
-            </td>
-            <td>
-              <span class="badge badge-primary badge-sm">{{
-                room.estado
-              }}</span>
-            </td>
-            <td>
-              <h3 class="text-xl">
-                {{ room.activo === true ? "Activo" : "Inactivo" }}
-              </h3>
-            </td>
-            <td>
+              <div>
+                <div class="font-bold text-base">{{ room.nombre }}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span
+              class="badge badge-primary badge-outline badge-sm font-medium"
+            >
+              {{ room.estado }}
+            </span>
+          </td>
+          <td>
+            <span
+              class="badge badge-sm font-medium border-none"
+              [class]="
+                room.activo
+                  ? 'bg-success/20 text-success'
+                  : 'bg-error/20 text-error'
+              "
+            >
+              {{ room.activo ? "Activo" : "Inactivo" }}
+            </span>
+          </td>
+          <td>
+            <div class="flex items-center gap-2">
               <button
                 (click)="edit.emit(room)"
-                class="btn btn-primary btn-xs mr-2"
+                class="btn btn-ghost btn-xs text-primary hover:bg-primary/20"
               >
                 Editar
               </button>
-              <button class="btn btn-error btn-xs">Eliminar</button>
-            </td>
-          </tr>
-        }
+              <button
+                (click)="delete.emit(room)"
+                class="btn btn-ghost btn-xs text-error hover:bg-error/20"
+              >
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <td colspan="5">
+          <no-data [titulo]="'salas'"></no-data>
+        </td>
       }
     </tbody>
-    <tfoot>
-      <tr>
-        <th>Nº</th>
-        <th>Nombre</th>
-        <th>Duración</th>
-        <th>Activo</th>
-        <th>Acciones</th>
-      </tr>
-    </tfoot>
   </table>
 </div>

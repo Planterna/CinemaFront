@@ -3,4 +3,5 @@ export interface MoviesResponse {
   nombre: string;
   duracion: number;
   activo?: boolean;
+  imagen_url?: string;
 }

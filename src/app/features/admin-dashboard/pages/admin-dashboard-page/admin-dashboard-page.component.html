@@ -1,125 +1,121 @@
 <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        Dashboard
-    </h1>
+  <h1 class="text-2xl md:text-3xl font-bold text-base-content tracking-tight">
+    Dashboard
+  </h1>
 </div>
 
 <div
-    class="stats stats-vertical lg:stats-horizontal shadow-xl bg-gray-900 w-full text-slate-300 border border-slate-700/50 rounded-2xl mb-8">
-    <div class="stat place-items-center lg:place-items-start p-6">
-        <div class="stat-figure text-blue-500 hidden lg:block">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                class="inline-block w-8 h-8 stroke-current">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                </path>
-            </svg>
-        </div>
-        <div routerLink="/cinema/movie"
-            class="stat-title font-medium text-slate-400 hover:text-white cursor-pointer transition-colors">
-            Películas Total
-        </div>
-        <div class="stat-value text-blue-500 text-4xl font-bold mt-1">
-            {{movieResource.value()?.length! > 0 ? movieResource.value()?.length : "No Data" }}
-        </div>
-        <div class="stat-desc text-slate-500 mt-1">Catálogo actual</div>
+  class="stats stats-vertical lg:stats-horizontal shadow-xl bg-base-100 w-full text-base-content border border-base-300 rounded-2xl mb-8"
+>
+  <div class="stat place-items-center lg:place-items-start p-6">
+    <div class="stat-figure text-primary hidden lg:block">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        ></path>
+      </svg>
     </div>
-
     <div
-        class="stat place-items-center lg:place-items-start border-t lg:border-t-0 lg:border-l border-slate-700/50 p-6">
-        <div class="stat-figure text-purple-500 hidden lg:block">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                class="inline-block w-8 h-8 stroke-current">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
-                </path>
-            </svg>
-        </div>
-        <div routerLink="/cinema/room"
-            class="stat-title font-medium text-slate-400 hover:text-white cursor-pointer transition-colors">
-            Total Salas
-        </div>
-        <div class="stat-value text-purple-500 text-4xl font-bold mt-1">
-            {{roomResource.value()?.length! > 0 ? roomResource.value()?.length : "No Data"}}
-        </div>
-        <div class="stat-desc text-slate-500 mt-1">Capacidad Instalada</div>
+      routerLink="/cinema/movie"
+      class="stat-title font-medium text-base-content/60 hover:text-base-content cursor-pointer transition-colors"
+    >
+      Películas Total
     </div>
+    <div class="stat-value text-primary text-4xl font-bold mt-1">
+      {{
+        movieResource.value()?.length! > 0
+          ? movieResource.value()?.length
+          : "No Data"
+      }}
+    </div>
+    <div class="stat-desc text-base-content/50 mt-1">Catálogo actual</div>
+  </div>
 
-    <div
-        class="stat place-items-center lg:place-items-start border-t lg:border-t-0 lg:border-l border-slate-700/50 p-6">
-        <div class="stat-figure text-emerald-500 hidden lg:block">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 stroke-current" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        </div>
-        <div class="stat-title font-medium text-slate-400">Salas Activas</div>
-        <div class="stat-value text-emerald-500 text-4xl font-bold mt-1">
-            {{roomActivedResource.value()?.length! > 0 ? roomActivedResource.value()?.length : "NO DATA"}}
-        </div>
-        <div class="stat-desc text-emerald-500/80 mt-1">Disponibles hoy</div>
+  <div
+    class="stat place-items-center lg:place-items-start border-t lg:border-t-0 lg:border-l border-base-300 p-6"
+  >
+    <div class="stat-figure text-secondary hidden lg:block">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="inline-block w-8 h-8 stroke-current"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        ></path>
+      </svg>
     </div>
+    <div
+      routerLink="/cinema/room"
+      class="stat-title font-medium text-base-content/60 hover:text-base-content cursor-pointer transition-colors"
+    >
+      Total Salas
+    </div>
+    <div class="stat-value text-secondary text-4xl font-bold mt-1">
+      {{
+        roomResource.value()?.length! > 0
+          ? roomResource.value()?.length
+          : "No Data"
+      }}
+    </div>
+    <div class="stat-desc text-base-content/50 mt-1">Capacidad Instalada</div>
+  </div>
+
+  <div
+    class="stat place-items-center lg:place-items-start border-t lg:border-t-0 lg:border-l border-base-300 p-6"
+  >
+    <div class="stat-figure text-success hidden lg:block">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-8 w-8 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </div>
+    <div class="stat-title font-medium text-base-content/60">Salas Activas</div>
+    <div class="stat-value text-success text-4xl font-bold mt-1">
+      {{
+        roomActivedResource.value()?.length! > 0
+          ? roomActivedResource.value()?.length
+          : "No Data"
+      }}
+    </div>
+    <div class="stat-desc text-success/80 mt-1">Disponibles hoy</div>
+  </div>
 </div>
 
-<div class="bg-gray-900 rounded-2xl border border-slate-700/50 shadow-xl overflow-hidden">
-    <div class="px-6 py-5 border-b border-slate-700/50 bg-gray-900/50">
-        <h3 class="text-xl font-bold text-white">
-            Recuento de Asignaciones de Sala
-        </h3>
-    </div>
+<div
+  class="bg-base-100 rounded-2xl border border-base-300 shadow-xl overflow-hidden"
+>
+  <div class="px-6 py-5 border-b border-base-300 bg-base-200/60">
+    <h3 class="text-xl font-bold text-base-content">
+      Recuento de Asignaciones Activas de Peliculas a salas
+    </h3>
+  </div>
 
-    <div class="overflow-x-auto w-full">
-        <table class="w-full text-sm text-left whitespace-nowrap">
-            <thead class="text-xs text-slate-400 uppercase bg-slate-800/30">
-                <tr>
-                    <th scope="col" class="px-6 py-4 font-semibold tracking-wider">#</th>
-                    <th scope="col" class="px-6 py-4 font-semibold tracking-wider">Nombre Sala</th>
-                    <th scope="col" class="px-6 py-4 font-semibold tracking-wider">Nombre Película</th>
-                    <th scope="col" class="px-6 py-4 font-semibold tracking-wider">Fecha Inicio</th>
-                    <th scope="col" class="px-6 py-4 font-semibold tracking-wider">Fecha Fin</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-700/50">
-                @for (item of assignmentResource.value()!; track $index) {
-                <tr class="hover:bg-slate-800/60 transition-colors duration-200">
-                    <td class="px-6 py-4 text-slate-400 font-medium">
-                        {{ $index + 1 }}
-                    </td>
-
-                    <td class="px-6 py-4 text-white">
-                        @for (dato of roomResource.value()!; track $index){
-                        @if(item.id_sala === dato.id_sala){
-                        {{dato.nombre}}
-                        }
-                        }
-                    </td>
-
-                    <td class="px-6 py-4 text-white font-medium">
-                        @for (dato of movieResource.value()!; track $index) {
-                        @if(item.id_pelicula === dato.id_pelicula){
-                        {{dato.nombre}}
-                        }
-                        }
-                    </td>
-
-                    <td class="px-6 py-4 text-slate-300">
-                        <span class="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                            {{item.fecha_publicacion | date}}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-slate-300">
-                        <span class="bg-slate-800 px-3 py-1 rounded-full text-xs border border-slate-700">
-                            {{item.fecha_fin | date}}
-                        </span>
-                    </td>
-                </tr>
-                }@empty{
-                <tr class="text-center justify-center">
-                    <td colspan="5" class="text-xl font-montserrat font-bold py-4">
-                        No hay data para mostrar
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+  <div>
+    <app-assignment-table
+      [assignments]="assignmentResource.value()!"
+      [dashboard]="true"
+    ></app-assignment-table>
+  </div>
 </div>

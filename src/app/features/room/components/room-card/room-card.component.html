@@ -1,39 +1,27 @@
-<div
-  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-3"
->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 gap-6">
   @for (room of rooms(); track room.id_sala) {
+    <div class="card card-compact bg-base-100 text-base-content shadow-md hover:shadow-xl border border-base-300 transition-all duration-300 hover:-translate-y-1 animate-fadeIn overflow-hidden group">
+      
+      <figure class="w-full h-56 overflow-hidden">
+        <img 
+          [src]="room.imagen_url" 
+          alt="{{ room.nombre }}" 
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+        />
+      </figure>
 
-  <div class="card card-compact bg-base-100 shadow-xl animate-fadeIn">
-    <figure>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
-      />
-    </figure>
-    <div class="card-body">
-      <h2
-        class="card-title font-montserrat text-accent text-lg hover:underline cursor-pointer"
-      >
-        {{ room.nombre }}
-      </h2>
-      <p>
-        Esta sala de cine esta:
-        <span
-          class="font-bold"
-          [style.color]="room.estado === 'Activa' ? 'green' : 'red'"
-        >
-          {{ room.estado }}
-        </span>
-      </p>
-      <div class="card-actions justify-end">
-        <a
-          class="text-accent"
-          [routerLink]="['/cinema/room/edit/', room.id_sala]"
-          class="link link-accent"
-        >
-          Ver Detalles
-        </a>
+      <div class="card-body">
+        <h2 class="card-title font-montserrat text-primary text-lg hover:underline cursor-pointer">
+          {{ room.nombre }}
+        </h2>
+        <p class="text-base-content/80 text-sm">
+          Esta sala de cine está:
+          <span class="badge badge-sm font-medium border-none ml-1"
+                [class]="room.estado === 'Activa' ? 'bg-success/20 text-success' : 'bg-error/20 text-error'">
+            {{ room.estado }}
+          </span>
+        </p>
       </div>
     </div>
-  </div>
   }
 </div>

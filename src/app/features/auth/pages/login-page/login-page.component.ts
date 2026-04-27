@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,8 +11,10 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginPage {
   fb = inject(FormBuilder);
   router = inject(Router);
+  authService = inject(AuthService);
 
   hasError = signal(false);
+  errorMessage = signal('');
   isPosting = signal(false);
 
   loginForm = this.fb.group({
@@ -21,23 +24,37 @@ export class LoginPage {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.hasError.set(true);
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
+      this.showError('Revisa los campos del formulario antes de continuar.');
       return;
     }
 
-    const { email = '', password = '' } = this.loginForm.value;
+    this.isPosting.set(true);
 
-    if (email === 'admin@admin.com' && password === 'admin') {
-      this.router.navigateByUrl('/cinema');
-      return;
-    } else {
-      this.hasError.set(true);
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
-    }
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login({ email: email!, password: password! }).subscribe({
+      next: () => {
+        this.isPosting.set(false);
+        if (this.authService.isAdmin()) {
+          this.router.navigateByUrl('/admin/dashboard');
+        } else {
+          this.router.navigateByUrl('/cinema');
+        }
+      },
+      error: (err) => {
+        this.isPosting.set(false);
+        const mensajeBackend =
+          err.error?.message || 'Error al iniciar sesión. Intenta de nuevo.';
+        this.showError(mensajeBackend);
+      },
+    });
+  }
+
+  private showError(message: string) {
+    this.errorMessage.set(message);
+    this.hasError.set(true);
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 3000); 
   }
 }
