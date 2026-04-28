@@ -8,110 +8,150 @@
   >
   </app-modal-global>
 }
-<div class="flex justify-center items-center">
-  <form
-    class="card w-full max-w-md bg-base-100 text-base-content shadow-xl border border-base-300 p-6 space-y-4"
-    [formGroup]="assignmentForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <h2 class="text-xl font-bold text-center text-base-content">
-      Asignar Película a Sala
-    </h2>
 
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text text-base-content/80">Película</span>
-      </label>
-      <select
-        class="select select-bordered w-full"
-        formControlName="id_pelicula"
+<div class="container mx-auto px-4 py-6 max-w-2xl">
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-base-content">Editar Asignación</h2>
+    <p class="text-base-content/60 text-sm mt-1">
+      Modifica los detalles de la película programada.
+    </p>
+  </div>
+
+  @if (hasError()) {
+    <div class="alert alert-error text-white text-sm mb-4 py-2 shadow-sm">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
       >
-        <option disabled>Seleccione una película</option>
-
-        @for (movie of movieResource.value(); track movie.id_pelicula) {
-          <option
-            [selected]="
-              movie.id_pelicula === assignmentResource.value()?.id_pelicula
-            "
-            [value]="movie.id_pelicula"
-          >
-            {{ movie.nombre }}
-          </option>
-        }
-      </select>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span>Por favor completa todos los campos correctamente.</span>
     </div>
+  }
 
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text text-base-content/80">Sala</span>
-      </label>
-      <select class="select select-bordered w-full" formControlName="id_sala">
-        <option disabled selected>Seleccione una sala</option>
-        @for (room of roomResource.value(); track room.id_sala) {
-          <option
-            [selected]="room.id_sala === assignmentResource.value()?.id_sala"
-            [value]="room.id_sala"
-          >
-            {{ room.nombre }}
-          </option>
-        }
-      </select>
-    </div>
-
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text text-base-content/80">Fecha Publicacion</span>
-      </label>
-      <input
-        type="date"
-        class="input select-bordered"
-        formControlName="fecha_publicacion"
-        [value]="parseDate(assignmentResource.value()?.fecha_publicacion!)"
-      />
-    </div>
-
-    <div class="form-control w-full">
-      <label class="label">
-        <span class="label-text text-base-content/80">Fecha Fin</span>
-      </label>
-      <input
-        type="date"
-        class="input select-bordered"
-        formControlName="fecha_fin"
-        [value]="parseDate(assignmentResource.value()?.fecha_fin!)"
-      />
-    </div>
-     <div
-          class="form-control bg-base-200/70 p-3 rounded-lg border border-base-300"
-        >
-          <label class="cursor-pointer label justify-between">
-            <span class="label-text text-base-content/80 font-medium"
-              >Disponible en Cartelera</span
-            >
-            <input
-              type="checkbox"
-              class="checkbox checkbox-primary checkbox-md"
-              formControlName="activo"
-              [checked]="assignmentResource.value()?.activo"
-            />
-          </label>
+  <div class="card bg-base-100 shadow-xl border border-base-200">
+    <div class="card-body">
+      @if (assignmentResource.isLoading()) {
+        <div class="flex justify-center p-12">
+          <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
+      } @else {
+        <form
+          [formGroup]="assignmentForm"
+          (ngSubmit)="onSubmit()"
+          class="space-y-4"
+        >
+          <div class="form-control">
+            <label class="label pt-0"
+              ><span class="label-text font-medium">Película</span></label
+            >
+            <select
+              class="select select-bordered w-full"
+              formControlName="id_pelicula"
+              [class.select-error]="
+                assignmentForm.get('id_pelicula')?.invalid &&
+                assignmentForm.get('id_pelicula')?.touched
+              "
+            >
+              <option value="" disabled>Selecciona una película</option>
+              @for (
+                movie of movieResource.value() || [];
+                track movie.id_pelicula
+              ) {
+                <option [value]="movie.id_pelicula">{{ movie.nombre }}</option>
+              }
+            </select>
+          </div>
 
-    <div class="form-control mt-6">
-      <button
-        class="btn btn-primary flex-1 order-1 sm:order-2 shadow-lg shadow-primary/30"
-        type="submit"
-        [disabled]="assignmentForm.invalid"
-      >
-        Guardar
-      </button>
-      <button
-        class="btn btn-ghost mt-3 flex-1 order-1 sm:order-2"
-        type="button"
-        routerLink="/admin/assignment"
-      >
-        Salir
-      </button>
+          <div class="form-control">
+            <label class="label"
+              ><span class="label-text font-medium">Sala de Cine</span></label
+            >
+            <select
+              class="select select-bordered w-full"
+              formControlName="id_sala"
+              [class.select-error]="
+                assignmentForm.get('id_sala')?.invalid &&
+                assignmentForm.get('id_sala')?.touched
+              "
+            >
+              <option value="" disabled>Selecciona una sala</option>
+              @for (room of roomResource.value() || []; track room.id_sala) {
+                <option [value]="room.id_sala">{{ room.nombre }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control">
+              <label class="label"
+                ><span class="label-text font-medium">Fecha Inicio</span></label
+              >
+              <input
+                type="date"
+                class="input input-bordered w-full"
+                formControlName="fecha_publicacion"
+                [class.input-error]="
+                  assignmentForm.get('fecha_publicacion')?.invalid &&
+                  assignmentForm.get('fecha_publicacion')?.touched
+                "
+              />
+            </div>
+
+            <div class="form-control">
+              <label class="label"
+                ><span class="label-text font-medium">Fecha Fin</span></label
+              >
+              <input
+                type="date"
+                class="input input-bordered w-full"
+                formControlName="fecha_fin"
+                [min]="minDateFin()"
+                [max]="maxDateFin()"
+                [class.input-error]="
+                  assignmentForm.get('fecha_fin')?.invalid &&
+                  assignmentForm.get('fecha_fin')?.touched
+                "
+              />
+            </div>
+          </div>
+
+          <div class="form-control mt-2">
+            <label class="cursor-pointer label justify-start gap-3">
+              <input
+                type="checkbox"
+                class="toggle toggle-primary"
+                formControlName="activo"
+              />
+              <span class="label-text">Asignación Activa</span>
+            </label>
+          </div>
+
+          <div class="form-control mt-6 flex-row gap-3">
+            <button
+              type="button"
+              class="btn btn-ghost"
+              routerLink="/admin/assignment"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary flex-1"
+              [disabled]="assignmentForm.invalid"
+            >
+              Guardar Cambios
+            </button>
+          </div>
+        </form>
+      }
     </div>
-  </form>
+  </div>
 </div>

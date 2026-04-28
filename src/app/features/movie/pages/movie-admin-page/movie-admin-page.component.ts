@@ -10,7 +10,7 @@ import { MovieSearch } from '../../components/movie-search/movie-search.componen
 import { MovieFilterDateComponent } from '../../components/movie-filter-date/movie-filter-date.component';
 
 @Component({
-  selector: 'app-movie-admin-page', 
+  selector: 'app-movie-admin-page',
   imports: [
     MovieTableComponent,
     RouterLink,
@@ -36,12 +36,12 @@ export class MovieAdminPage {
   movieResource = rxResource({
     request: () => this.filtros(),
     loader: ({ request }) => {
-     /*  if (request.fechaInicio && request.fechaFin) {
+      if (request.fechaInicio && request.fechaFin) {
         return this.movieService.getMovieForDate(
           request.fechaInicio,
           request.fechaFin,
         );
-      } */
+      }
 
       if (request.nombre) {
         return this.movieService.getMovieForName(request.nombre);
@@ -51,20 +51,18 @@ export class MovieAdminPage {
     },
   });
 
-
   searchMovie(event: string) {
     const name = event.toLowerCase().trim();
-    // Prioridad a la búsqueda: borramos las fechas
     this.filtros.set({ nombre: name, fechaInicio: '', fechaFin: '' });
   }
 
   filterByDate(fechas: [string, string]) {
     const [inicio, fin] = fechas;
+    console.log({ inicio, fin });
     if (!inicio || !fin) return;
 
     this.filtros.set({ nombre: '', fechaInicio: inicio, fechaFin: fin });
   }
-
 
   editMovie = (movie: MoviesResponse) => {
     this.router.navigate(['/admin/movie/edit/', movie.id_pelicula]);

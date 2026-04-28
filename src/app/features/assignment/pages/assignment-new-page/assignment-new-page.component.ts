@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed, rxResource } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AssignmentMovieService } from '../../../../core/services/assignment.service';
@@ -13,7 +13,6 @@ import { ModalType } from '../../../movie/components/movie-alert/movie-alert.com
   selector: 'app-assignment-new-page',
   imports: [ReactiveFormsModule, RouterLink, ModalGlobalComponent],
   templateUrl: './assignment-new-page.component.html',
-  styles: ``,
 })
 export class AssignmentNewPage {
   movieService = inject(MovieService);
@@ -22,6 +21,7 @@ export class AssignmentNewPage {
   fb = inject(FormBuilder);
   activatedRoute = inject(ActivatedRoute);
   route = inject(Router);
+  destroyRef = inject(DestroyRef);
 
   tipoModal = signal<ModalType | null>(null);
   tituloModal = signal<string>('');
@@ -30,7 +30,8 @@ export class AssignmentNewPage {
   isModalOpen = signal<boolean>(false);
   assignmentSeleccionada = signal<AssignmentResponseDTO | null>(null);
 
-  id = this.activatedRoute.snapshot.params['id'];
+  minDateFin = signal<string>('');
+  maxDateFin = signal<string>('');
 
   movieResource = rxResource({
     loader: () => this.movieService.getMovie(),
@@ -41,12 +42,49 @@ export class AssignmentNewPage {
   });
 
   assignmentForm = this.fb.group({
-    id_sala: [, [Validators.required]],
-    id_pelicula: [, [Validators.required]],
-    fecha_publicacion: [, [Validators.required]],
-    fecha_fin: [, [Validators.required]],
-    activo: [false],
+    id_sala: ['', [Validators.required]],
+    id_pelicula: ['', [Validators.required]],
+    fecha_publicacion: ['', [Validators.required]],
+    fecha_fin: [{ value: '', disabled: true }, [Validators.required]],
+    activo: [true],
   });
+
+  constructor() {
+    this.assignmentForm
+      .get('fecha_publicacion')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((fechaInicio) => {
+        this.actualizarLimites(fechaInicio);
+      });
+  }
+
+  private actualizarLimites(fechaInicio: string | null | undefined) {
+    const controlFin = this.assignmentForm.get('fecha_fin');
+
+    if (!fechaInicio) {
+      this.minDateFin.set('');
+      this.maxDateFin.set('');
+      controlFin?.disable();
+      controlFin?.setValue('');
+      return;
+    }
+
+    controlFin?.enable();
+    this.minDateFin.set(fechaInicio);
+
+    const fechaMax = new Date(fechaInicio);
+    fechaMax.setMonth(fechaMax.getMonth() + 1);
+    const fechaMaxFormateada = fechaMax.toISOString().split('T')[0];
+
+    this.maxDateFin.set(fechaMaxFormateada);
+
+    const fechaFinActual = controlFin?.value;
+    if (fechaFinActual) {
+      if (fechaFinActual < fechaInicio || fechaFinActual > fechaMaxFormateada) {
+        controlFin?.setValue('');
+      }
+    }
+  }
 
   onSubmit() {
     if (this.assignmentForm.invalid) {
@@ -56,7 +94,7 @@ export class AssignmentNewPage {
     }
 
     const { id_sala, id_pelicula, fecha_publicacion, fecha_fin, activo } =
-      this.assignmentForm.value;
+      this.assignmentForm.getRawValue();
 
     this.assignmentService
       .createAssignment({
@@ -70,33 +108,26 @@ export class AssignmentNewPage {
         next: () => {
           this.tipoModal.set('SUCCESS');
           this.tituloModal.set('Creación Exitosa');
-          this.descripcionModal.set('La asignación se crep con exito');
+          this.descripcionModal.set('La asignación se creó con éxito');
           this.isModalOpen.set(true);
         },
-        error: () => {
+        error: (err) => {
           this.tipoModal.set('ERROR');
           this.tituloModal.set('No se pudo crear');
-          this.descripcionModal.set('La asignación no se pudo crear');
+          this.descripcionModal.set(
+            err.error?.message || 'La asignación no se pudo crear',
+          );
           this.isModalOpen.set(true);
         },
       });
-  }
-
-  parseDate = (date: Date | string | null): string => {
-    if (!date) return '';
-    const dateStr = typeof date === 'string' ? date : date.toISOString();
-    return dateStr.split('T')[0];
-  };
-
-  abrirModalEliminar(assignment: AssignmentResponseDTO) {
-    this.assignmentSeleccionada.set(assignment);
-    this.isModalOpen.set(true);
   }
 
   cerrarModal() {
     this.isModalOpen.set(false);
     this.tituloModal.set('');
     this.descripcionModal.set('');
-    this.assignmentSeleccionada.set(null);
+    if (this.tipoModal() === 'SUCCESS') {
+      this.route.navigateByUrl('/admin/assignment');
+    }
   }
 }

@@ -22,8 +22,8 @@ export class MovieService {
     return this.http.get<MoviesResponse>(`${baseUrl}/movie/${id}`);
   }
 
-  getMovieForDate(fecha_publicacion: string, fecha_fin: string) {
-    return this.http.get(
+  getMovieForDate(fecha_publicacion: string, fecha_fin: string): Observable<MoviesResponse[] | null> {
+    return this.http.get<MoviesResponse[]>(
       `${baseUrl}/movie/date/${fecha_publicacion}/${fecha_fin}`,
     );
   }
