@@ -11,33 +11,48 @@
 }
 
 <div class="container mx-auto px-4 py-2">
+  
   <div class="mb-3 text-center md:text-left">
     <h2 class="text-2xl md:text-4xl font-bold text-base-content">
-      Peliculas Disponibles
+      Películas Disponibles
       <span class="ml-1 badge badge-accent badge-lg font-extrabold">
-        {{ movieResource.value()?.length }}
+        {{ movieResource.value()?.length || 0 }}
       </span>
     </h2>
     <p class="text-base-content/60 mt-2 text-sm md:text-base">
-      Administra la peliculas disponibles.
+      Administra las películas disponibles en el sistema.
     </p>
   </div>
-  <div class="flex items-center justify-between w-full">
-    <div>
-      <h2>implements</h2>
-      <!-- <movie-search (action)="searchMovie($event)"></movie-search> -->
+
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 w-full mb-4 bg-base-200/50 p-4 rounded-xl border border-base-300">
+    
+    <div class="w-full md:w-auto flex-grow max-w-sm">
+      <movie-search (action)="searchMovie($event)"></movie-search>
     </div>
 
-    <div>
+    <div class="w-full md:w-auto">
+      <app-movie-filter-date (action)="filterByDate($event)"></app-movie-filter-date>
+    </div>
+
+    <div class="w-full md:w-auto flex justify-end">
       <button
-        class="btn btn-primary border my-2 "
+        class="btn btn-primary w-full md:w-auto mb-1 shadow-sm"
         [routerLink]="['/admin/movie/new']"
       >
-        Add
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Agregar Película
       </button>
     </div>
   </div>
-<div>
-  <app-movie-table [movies]="movieResource.value()!" (edit)="editMovie($event)" (delete)="abrirModalEliminar($event)">
-  </app-movie-table>
+
+  <div class="mt-6">
+    <app-movie-table
+      [movies]="movieResource.value() || []"
+      (edit)="editMovie($event)"
+      (delete)="abrirModalEliminar($event)"
+    >
+    </app-movie-table>
+  </div>
 </div>
